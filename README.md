@@ -11,9 +11,11 @@ The only dependency required to run this program is PIL (Pillow). We believe in 
 
 ### Generating the dataset
 To train the algorithm, we need to generate two types of images: circles and rectangles. For circles, we use the PIL library to create 20x20 images with varying configurations of radius and center coordinates. The circle is defined by the equation:
+
 ```
 (x-a)^2 + (y-b)^2 <= r^2
 ```
+
 For rectangles, we generate images with a random size and position. The rectangle is defined by the equation:
 
 ```

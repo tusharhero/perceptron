@@ -18,8 +18,12 @@ To generate the data set to train our algorithm, we will need to generate a few 
 
 ### circle
 
-We will use pillow generate the 20x20 images of circle with different configuration(i'e varying a,b,r)
+We will use pillow generate the 20x20 images of circle with different configuration(i'e varying a,b,r).
 
 ```
- (x-a)^2 + (y-b)^2 = r^2
+ (x-a)^2 + (y-b)^2 <= r^2
 ```
+
+### rectangle
+
+we will need to generate rectangles.

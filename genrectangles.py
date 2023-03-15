@@ -20,7 +20,7 @@ from PIL import Image as im
 
 #config
 size = (20,20)
-center = 19
+center = 20
 
 def genrectangle(a,b,p,q,size,filename):
     rectangle = im.new("L",size,0)

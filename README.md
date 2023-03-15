@@ -11,19 +11,24 @@ No really, I *hate* programs which have a lot of dependencies for no good reason
 
 ## Implementation
 
+### generating dataset
 To generate the data set to train our algorithm, we will need to generate a few data sets.
 
 - circle
 - rectangle
 
-### circle
+#### circle
 
 We will use pillow generate the 20x20 images of circle with different configuration(i'e varying a,b,r).
 
 ```
- (x-a)^2 + (y-b)^2 <= r^2
+(x-a)^2 + (y-b)^2 <= r^2
 ```
 
-### rectangle
+#### rectangle
 
-we will need to generate rectangles.
+We will need to generate rectangles.
+
+```
+|x-a| <= q and |y-b| <= p
+```

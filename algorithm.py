@@ -1,4 +1,4 @@
-'''
+"""
 The GPLv3 License (GPLv3)
 
 Copyright (c) 2023 Tushar Maharana
@@ -15,14 +15,14 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''
+"""
 
 from PIL import Image as im
 import random as ran
 
 
 def getfilename(
-    shape, var = 20
+    shape, var=20
 ):  # select random files from dataset. (This is possible because they follow a specific naming rule.)
     filename = ""
     if shape == "circle":
@@ -38,15 +38,17 @@ def getfilename(
         filename = f"rectangles/({a},{b},{c},{d}).png"
     return filename
 
-def list_float2int(list):
+
+def list_float2int(list):  # convert each elemenet of the list into an integer
     intlist = []
     for i in list:
         intlist.append(int(i))
     return intlist
 
-def genrandweight(size):
+
+def genrandweight(size):  # randomly generate weight for first run
     weight = []
-    for i in range(size[0]*size[1]):
+    for i in range(size[0] * size[1]):
         weight.append(ran.randint(-1, 1))
     return weight
 
@@ -59,29 +61,31 @@ def getfilecontent(filepath):
 
 def multiply(weight, image_list, size=(20, 20)):
     product = 0
-    for i in range(size[0]*size[1]):
+    for i in range(size[0] * size[1]):
         product += weight[i] * image_list[i]
     return product
 
 
 def addition(weight, image_list, SubOrAdd=1, size=(20, 20)):
     sum = []
-    for i in range(size[0]*size[1]):
+    for i in range(size[0] * size[1]):
         sum.append(weight[i] + image_list[i] * SubOrAdd)
     return sum
 
 
-def normalize(list, factor):
+def normalize(list, factor):  # fit it in the range of [0,1]
     normalized_list = []
     for i in list:
-        normalized_list.append(i / 255)
+        normalized_list.append(i / 255 * factor)
     return normalized_list
 
+
 def getimage_list(image):
-    image_list = normalize(list((image.getdata())),1)
+    image_list = normalize(list((image.getdata())), 1)
     return image_list
 
-def guess(image,weight):
+
+def guess(image, weight):
     image_list = getimage_list(im.open(getfilename(shape)))
     product = multiply(weight, image_list)
 
@@ -92,6 +96,7 @@ def guess(image,weight):
         predict_shape = shape[1]
         guess = 1
     return guess
+
 
 def train(
     bias=1000,
@@ -109,12 +114,12 @@ def train(
 
     correct_guesses = 0
 
+    # Read Wikipedia article linked in README.md
     for i in range(enouchs):
         shape = shapes[ran.randrange(2)]
         image_list = getimage_list(im.open(getfilename(shape)))
 
         product = multiply(weight, image_list)
-
         if product + bias > 0:
             predict_shape = shapes[0]
             if shape != predict_shape:
@@ -127,7 +132,7 @@ def train(
         if shape == predict_shape:
             correct_guesses += 1
 
-        if i % 1000 == 0:
+        if i % 1000 == 0:  # log and save every 1000 enouchs
             weight_viz = im.new("RGB", size)
             weight_viz.putdata(list_float2int(weight))
             weight_viz.save("weight.png")

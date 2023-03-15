@@ -16,25 +16,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from PIL import Image as im
+import algorithm as algo
+import sys
 
-# config
-size = (20, 20)
-max_radius = 20
+weightpath = sys.argv[1]
+weight = algo.getfilecontent(weightpath)
 
+imagepath = sys.argv[2]
+image = im.open(imagepath)
 
-def gencircle(a, b, radius, filename, size):
-    circle = im.new("L", size, 0)
-    for x in range(size[0]):
-        for y in range(size[1]):
-            if (x - a) ** 2 + (y - b) ** 2 <= radius**2:
-                circle.putpixel((x, y), 255)
-    circle.save(filename)
-
-
-# loop through all permutations of a,b,r
-for a in range(size[0]):
-    for b in range(size[1]):
-        for r in range(max_radius):
-            gencircle(a, b, r, f"circles/({a},{b},{r}).png", size)
+if algo.guess(image, weight) == 0:
+    print("It's a circle!")
+else:
+    print("It's a rectangle!")

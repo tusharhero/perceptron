@@ -1,4 +1,4 @@
-'''
+"""
 The GPLv3 License (GPLv3)
 
 Copyright (c) 2023 Author
@@ -15,7 +15,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''
+"""
 
 import algorithm as ag
 

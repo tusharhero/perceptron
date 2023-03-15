@@ -77,6 +77,21 @@ def normalize(list, factor):
         normalized_list.append(i / 255)
     return normalized_list
 
+def getimage_list(image):
+    image_list = normalize(list((image.getdata())),1)
+    return image_list
+
+def guess(image,weight):
+    image_list = getimage_list(im.open(getfilename(shape)))
+    product = multiply(weight, image_list)
+
+    if product + bias > 0:
+        predict_shape = shapes[0]
+        guess = 0
+    else:
+        predict_shape = shape[1]
+        guess = 1
+    return guess
 
 def train(
     bias=1000,
@@ -96,7 +111,7 @@ def train(
 
     for i in range(enouchs):
         shape = shapes[ran.randrange(2)]
-        image_list = normalize(list((im.open(getfilename(shape)).getdata())),1)
+        image_list = getimage_list(im.open(getfilename(shape)))
 
         product = multiply(weight, image_list)
 

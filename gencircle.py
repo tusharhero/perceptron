@@ -27,7 +27,7 @@ def gencircle(a,b,radius,filename,size):
     circle = im.new("L",size,0)
     for x in range(size[0]):
         for y in range(size[1]):
-            if (x-a)**2 + (y-b)**2 == radius**2:
+            if (x-a)**2 + (y-b)**2 <= radius**2:
                 circle.putpixel((x,y),255)
     circle.save(filename)
 

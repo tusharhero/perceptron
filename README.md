@@ -7,6 +7,32 @@ This program implements a linear classifier algorithm that can differentiate bet
 
 The only dependency required to run this program is PIL (Pillow). We believe in keeping dependencies to a minimum to reduce unnecessary complexity.
 
+## Usage
+
+1. Clone the repository by running the following command:
+
+```
+git clone https://github.com/tusharhero/perceptron.git
+```
+2. Navigate to the project directory:
+
+```
+cd perceptron
+```
+3. Train the model by running the following command:
+
+```
+python train.py
+```
+This will train the model using the default dataset and save the trained weights to disk.
+
+4. Test the model by running the following command:
+
+```
+python test.py /path/to/weights /path/to/image
+```
+Replace `/path/to/weights` with the location of the trained weights file( `./weight` by default), and `/path/to/image` with the location of the test image. This will run the model on the test image and display the results. 
+
 ## Implementation
 
 ### Generating the dataset

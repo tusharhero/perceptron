@@ -17,24 +17,23 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from PIL import Image as im
+from PIL import Image as im 
 import random as ran
 
-
 def getfilename(
-    shape, var=20
+    shape, var=20, step = 5
 ):  # select random files from dataset. (This is possible because they follow a specific naming rule.)
     filename = ""
     if shape == "circle":
-        a = ran.randrange(var)
-        b = ran.randrange(var)
-        r = ran.randrange(var)
+        a = ran.randrange(0,var,step)
+        b = ran.randrange(0,var,step)
+        r = ran.randrange(0,var,step)
         filename = f"circles/({a},{b},{r}).png"
     if shape == "rectangle":
-        a = ran.randrange(var)
-        b = ran.randrange(var)
-        c = ran.randrange(var)
-        d = ran.randrange(var)
+        a = ran.randrange(0,var,step)
+        b = ran.randrange(0,var,step)
+        c = ran.randrange(0,var,step)
+        d = ran.randrange(0,var,step)
         filename = f"rectangles/({a},{b},{c},{d}).png"
     return filename
 
@@ -58,14 +57,14 @@ def getfilecontent(filepath):
         text = fp.read()
     return text
 
-def multiply(weight, image_list, size=(20, 20)):
-    product = 0
+def multiply(weight, image_list, size=(100, 100)):
+    product = 0 
     for i in range(size[0] * size[1]):
         product += weight[i] * image_list[i]
     return product
 
 
-def addition(weight, image_list, SubOrAdd=1, size=(20, 20)):
+def addition(weight, image_list, SubOrAdd=1, size=(100, 100)):
     sum = []
     for i in range(size[0] * size[1]):
         sum.append(weight[i] + (image_list[i] * SubOrAdd))
@@ -88,7 +87,7 @@ def guess(imagepath, weight, bias = 100, shapes=("circle","rectangle")):
     image_list = getimage_list(im.open(imagepath))
     product = multiply(weight, image_list)
 
-    if product > bias:
+    if product + bias > 0:
         predict_shape = shapes[0]
         guess = 0
     else:
@@ -101,7 +100,7 @@ def train(
     bias=1000,
     enouchs=10000,
     weightpath="",
-    size=(20, 20),
+    size=(100, 100),
     shapes=("circle", "rectangle"),
 ):
     # load weight from file or generate randomly
@@ -116,7 +115,8 @@ def train(
     # Read Wikipedia article linked in README.md
     for i in range(enouchs):
         shape = shapes[ran.randrange(2)]
-        image_list = getimage_list(im.open(getfilename(shape)))
+        filename = getfilename(shape)
+        image_list = getimage_list(im.open(filename))
 
         product = multiply(weight, image_list)
 
@@ -143,6 +143,6 @@ def train(
                 w.write(str(weight))
 
             with open("log", "a") as log:
-                log.write(f"{correct_guesses/(i+1)}; {i/(enouchs+1) * 100}%\n")
+                log.write(f"{correct_guesses/(i+1)}; {i/(enouchs+1) * 100}% := {filename}\n")
 
         print(i, correct_guesses, predict_shape, shape)

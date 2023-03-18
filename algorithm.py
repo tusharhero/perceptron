@@ -17,23 +17,24 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from PIL import Image as im 
+from PIL import Image as im
 import random as ran
 
+
 def getfilename(
-    shape, var=20, step = 5
+    shape, var=20, step=5
 ):  # select random files from dataset. (This is possible because they follow a specific naming rule.)
     filename = ""
     if shape == "circle":
-        a = ran.randrange(0,var,step)
-        b = ran.randrange(0,var,step)
-        r = ran.randrange(0,var,step)
+        a = ran.randrange(0, var, step)
+        b = ran.randrange(0, var, step)
+        r = ran.randrange(0, var, step)
         filename = f"circles/({a},{b},{r}).png"
     if shape == "rectangle":
-        a = ran.randrange(0,var,step)
-        b = ran.randrange(0,var,step)
-        c = ran.randrange(0,var,step)
-        d = ran.randrange(0,var,step)
+        a = ran.randrange(0, var, step)
+        b = ran.randrange(0, var, step)
+        c = ran.randrange(0, var, step)
+        d = ran.randrange(0, var, step)
         filename = f"rectangles/({a},{b},{c},{d}).png"
     return filename
 
@@ -57,8 +58,9 @@ def getfilecontent(filepath):
         text = fp.read()
     return text
 
+
 def multiply(weight, image_list, size=(100, 100)):
-    product = 0 
+    product = 0
     for i in range(size[0] * size[1]):
         product += weight[i] * image_list[i]
     return product
@@ -83,7 +85,7 @@ def getimage_list(image):
     return image_list
 
 
-def guess(imagepath, weight, bias = 100, shapes=("circle","rectangle")):
+def guess(imagepath, weight, bias=100, shapes=("circle", "rectangle")):
     image_list = getimage_list(im.open(imagepath))
     product = multiply(weight, image_list)
 
@@ -143,6 +145,8 @@ def train(
                 w.write(str(weight))
 
             with open("log", "a") as log:
-                log.write(f"{correct_guesses/(i+1)}; {i/(enouchs+1) * 100}% := {filename}\n")
+                log.write(
+                    f"{correct_guesses/(i+1)}; {i/(enouchs+1) * 100}% := {filename}\n"
+                )
 
         print(i, correct_guesses, predict_shape, shape)

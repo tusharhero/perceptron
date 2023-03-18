@@ -36,7 +36,7 @@ Replace `/path/to/weights` with the location of the trained weights file( `./wei
 ## Implementation
 
 ### Generating the dataset
-To train the algorithm, we need to generate two types of images: circles and rectangles. For circles, we use the PIL library to create 20x20 images with varying configurations of radius and center coordinates. The circle is defined by the equation:
+To train the algorithm, we need to generate two types of images: circles and rectangles. For circles, we use the PIL library to create 100px * 100px images with varying configurations of radius and center coordinates. The circle is defined by the equation:
 
 ```
 (x-a)^2 + (y-b)^2 <= r^2

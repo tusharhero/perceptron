@@ -58,7 +58,6 @@ def getfilecontent(filepath):
         text = fp.read()
     return text
 
-
 def multiply(weight, image_list, size=(20, 20)):
     product = 0
     for i in range(size[0] * size[1]):
@@ -69,7 +68,7 @@ def multiply(weight, image_list, size=(20, 20)):
 def addition(weight, image_list, SubOrAdd=1, size=(20, 20)):
     sum = []
     for i in range(size[0] * size[1]):
-        sum.append(weight[i] + image_list[i] * SubOrAdd)
+        sum.append(weight[i] + (image_list[i] * SubOrAdd))
     return sum
 
 
@@ -85,15 +84,15 @@ def getimage_list(image):
     return image_list
 
 
-def guess(image, weight):
-    image_list = getimage_list(im.open(getfilename(shape)))
+def guess(imagepath, weight, bias = 100, shapes=("circle","rectangle")):
+    image_list = getimage_list(im.open(imagepath))
     product = multiply(weight, image_list)
 
-    if product + bias > 0:
+    if product > bias:
         predict_shape = shapes[0]
         guess = 0
     else:
-        predict_shape = shape[1]
+        predict_shape = shapes[1]
         guess = 1
     return guess
 
@@ -120,12 +119,15 @@ def train(
         image_list = getimage_list(im.open(getfilename(shape)))
 
         product = multiply(weight, image_list)
+
+        print(product)
+
         if product + bias > 0:
             predict_shape = shapes[0]
             if shape != predict_shape:
                 weight = addition(weight, image_list, -1)
         else:
-            predict_shape = shape[1]
+            predict_shape = shapes[1]
             if shape != predict_shape:
                 weight = addition(weight, image_list, +1)
 
@@ -141,6 +143,6 @@ def train(
                 w.write(str(weight))
 
             with open("log", "a") as log:
-                log.write(f"{correct_guesses/(i+1)}; {i/(enouchs+1) * 100}%")
+                log.write(f"{correct_guesses/(i+1)}; {i/(enouchs+1) * 100}%\n")
 
-        print(i)
+        print(i, correct_guesses, predict_shape, shape)

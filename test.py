@@ -21,12 +21,11 @@ import algorithm as algo
 import sys
 
 weightpath = sys.argv[1]
-weight = algo.getfilecontent(weightpath)
+weight = eval(algo.getfilecontent(weightpath))
 
 imagepath = sys.argv[2]
-image = im.open(imagepath)
 
-if algo.guess(image, weight) == 0:
+if algo.guess(imagepath, weight) == 0:
     print("It's a circle!")
 else:
     print("It's a rectangle!")

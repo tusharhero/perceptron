@@ -19,4 +19,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import algorithm as ag
 
-ag.train()
+ag.train(enouchs = 10**7)

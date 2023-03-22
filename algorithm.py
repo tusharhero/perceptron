@@ -111,7 +111,7 @@ def train(
         weight = genrandweight(size)
         weightpath = "weight"
     else:
-        weight = eval(getfilecontent("weight"))
+        weight = eval(getfilecontent(weightpath))
 
     correct_guesses = 0
 

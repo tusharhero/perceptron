@@ -1,7 +1,7 @@
 """
 The GPLv3 License (GPLv3)
 
-Copyright (c) 2023 Author
+Copyright (c) 2023 Tushar Maharana
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,10 +20,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import algorithm as ag
 import argparse
 
-parser = argparse.ArgumentParser(prog='perceptron')
+parser = argparse.ArgumentParser(prog='perceptron-trainer'
+                                 description="""
+                                 This program will train perceptron and generate the weight file.
+                                 """
+                                 )
 
-parser.add_argument('-w', default='weight', action='store')
-parser.add_argument('-e', default=10**7, action='store')
+parser.add_argument('-w', default='weight', action='store', help="location of the weight file.")
+parser.add_argument('-e', default=10**7, action='store', help="Enouchs, the number of times it will train.")
 
 args = parser.parse_args()
 

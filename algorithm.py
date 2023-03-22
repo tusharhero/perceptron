@@ -22,7 +22,7 @@ import random as ran
 
 
 def getfilename(
-    shape, var=20, step=5
+    shape, var=100, step=5
 ):  # select random files from dataset. (This is possible because they follow a specific naming rule.)
     filename = ""
     if shape == "circle":

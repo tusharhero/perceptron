@@ -31,7 +31,7 @@ This will train the model using the default dataset and save the trained weights
 ```
 python test.py /path/to/weights /path/to/image
 ```
-Replace `/path/to/weights` with the location of the trained weights file( `./weight` by default), and `/path/to/image` with the location of the test image. This will run the model on the test image and display the results. 
+Replace `/path/to/weights` with the location of the trained weights file( `./weight` by default), and `/path/to/image` with the location of the test image(*The image has to be in 8 bits*). This will run the model on the test image and display the results. 
 
 ## Implementation
 

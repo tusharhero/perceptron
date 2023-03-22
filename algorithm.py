@@ -119,7 +119,7 @@ def train(
     for i in range(enouchs):
         shape = shapes[ran.randrange(2)]
         filename = getfilename(shape)
-        image = image.open(filename)
+        image = im.open(filename)
 
         if image_converstion:
             image.convert("L")

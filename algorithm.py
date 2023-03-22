@@ -151,7 +151,8 @@ def train(
 
             with open("log", "a") as log:
                 log.write(
-                    f"{correct_guesses/(i+1)}; {i/(enouchs+1) * 100}% := {filename}\n"
+                    f"{correct_guesses/(1000)}; {i/(enouchs+1) * 100}% := {filename}\n"
                 )
+                correct_guesses = 0
 
         print(i, correct_guesses, predict_shape, shape)

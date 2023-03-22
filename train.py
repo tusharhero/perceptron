@@ -18,12 +18,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import algorithm as ag
-import sys
+import argparse
 
-try:
-    path = sys.argv[1]
-    enouchs = sys.argv[2]
-except IndexError:
-    path = 'weight'
-    enouchs = 10**7
-ag.train(enouchs=enouchs, weightpath=path)
+parser = argparse.ArgumentParser(prog='perceptron')
+
+parser.add_argument('-w', default='weight', action='store')
+parser.add_argument('-e', default=10**7, action='store_int')
+
+args = parser.parse_args()
+
+ag.train(enouchs=args.e, weightpath=args.w)

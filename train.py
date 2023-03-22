@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import algorithm as ag
 import argparse
 
-parser = argparse.ArgumentParser(prog='perceptron-trainer'
+parser = argparse.ArgumentParser(prog='perceptron-trainer',
                                  description="""
                                  This program will train perceptron and generate the weight file.
                                  """

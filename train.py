@@ -23,8 +23,8 @@ import argparse
 parser = argparse.ArgumentParser(prog='perceptron')
 
 parser.add_argument('-w', default='weight', action='store')
-parser.add_argument('-e', default=10**7, action='store_int')
+parser.add_argument('-e', default=10**7, action='store')
 
 args = parser.parse_args()
 
-ag.train(enouchs=args.e, weightpath=args.w)
+ag.train(enouchs=int(args.e), weightpath=args.w)

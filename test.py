@@ -20,9 +20,9 @@ import algorithm as algo
 import argparse
 
 parser = argparse.ArgumentParser(
-                                 prog='perceptron-trainer',
+                                 prog='perceptron-tester',
                                  description="""
-                                 This program will train perceptron and generate the weight file.
+                                 this program can be used to test if perceptron works.
                                  """
 )
 

@@ -51,4 +51,7 @@ For rectangles, we generate images with a random size and position. The rectangl
 ### Applying the algorithm
 To test the algorithm, we randomly select an image with a shape (either circle or rectangle) and run it through the algorithm. The algorithm then adjusts its weights based on whether the classification was correct or not. We continue this process until the algorithm can accurately classify all images.
 
+### Contribution
+We would like to thank Techlord for testing the code and submitting several pull requests. Their contributions have helped to improve the quality and functionality of the program.
+
 *For more information on the Perceptron algorithm, please refer to the [Wikipedia article](https://wikipedia.org/wiki/Perceptron).*

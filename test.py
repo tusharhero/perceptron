@@ -25,7 +25,4 @@ weight = eval(algo.getfilecontent(weightpath))
 
 imagepath = sys.argv[2]
 
-if algo.guess(imagepath, weight) == 0:
-    print("It's a circle!")
-else:
-    print("It's a rectangle!")
+print(algo.guess(imagepath,weight,size=(100,100)))

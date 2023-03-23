@@ -20,6 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from PIL import Image as im
 import random as ran
 
+def image_conversion(image,size):
+    image.convert("RGBA").convert("L")
+    return image.resize(size)
 
 def getfilename(
     shape, var=100, step=5
@@ -85,17 +88,15 @@ def getimage_list(image):
     return image_list
 
 
-def guess(imagepath, weight, bias=100, shapes=("circle", "rectangle")):
-    image_list = getimage_list(im.open(imagepath).convert("L"))
+def guess(imagepath, weight, bias=100, shapes=("circle", "rectangle"),size):
+    image_list = getimage_list(image_conversion(im.open(imagepath),size))
     product = multiply(weight, image_list)
 
     if product + bias > 0:
         predict_shape = shapes[0]
-        guess = 0
     else:
         predict_shape = shapes[1]
-        guess = 1
-    return guess
+    return predict_shape 
 
 
 def train(
@@ -104,7 +105,7 @@ def train(
     weightpath="",
     size=(100, 100),
     shapes=("circle", "rectangle"),
-    image_converstion=False,
+    image_conversion=True,
 ):
     # load weight from file or generate randomly
     if len(weightpath) == 0:
@@ -122,8 +123,8 @@ def train(
         image = im.open(filename)
 
         if image_converstion:
-            image.convert("L")
-        image_list = getimage_list(image)
+            image_conversion(image)
+        image_list = getimage_list(image,size)
 
         product = multiply(weight, image_list)
 

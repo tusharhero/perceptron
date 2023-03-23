@@ -88,7 +88,7 @@ def getimage_list(image):
     return image_list
 
 
-def guess(imagepath, weight, bias=100, shapes=("circle", "rectangle"),size):
+def guess(imagepath, weight, bias=100, shapes=("circle", "rectangle"),size=(100,100)):
     image_list = getimage_list(image_conversion(im.open(imagepath),size))
     product = multiply(weight, image_list)
 
@@ -105,7 +105,7 @@ def train(
     weightpath="",
     size=(100, 100),
     shapes=("circle", "rectangle"),
-    image_conversion=True,
+    if_image_conversion=True,
 ):
     # load weight from file or generate randomly
     if len(weightpath) == 0:
@@ -122,9 +122,9 @@ def train(
         filename = getfilename(shape)
         image = im.open(filename)
 
-        if image_converstion:
-            image_conversion(image)
-        image_list = getimage_list(image,size)
+        if if_image_conversion:
+            image_conversion(image,size)
+        image_list = getimage_list(image)
 
         product = multiply(weight, image_list)
 

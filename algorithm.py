@@ -57,7 +57,7 @@ def genrandweight(size):  # randomly generate weight for first run
 
 
 def getfilecontent(filepath):
-    with open(filepath) as fp:
+    with open(filepath, 'r') as fp:
         text = fp.read()
     return text
 
@@ -106,6 +106,8 @@ def train(
     size=(100, 100),
     shapes=("circle", "rectangle"),
     if_image_conversion=True,
+    no_visualize_weight=False,
+    verbose=False
 ):
     # load weight from file or generate randomly
     if len(weightpath) == 0:
@@ -143,9 +145,10 @@ def train(
             correct_guesses += 1
 
         if i % 1000 == 0:  # log and save every 1000 enouchs
-            weight_viz = im.new("RGB", size)
-            weight_viz.putdata(list_float2int(weight))
-            weight_viz.save("weight.png")
+            if not no_visualize_weight:
+                weight_viz = im.new("RGB", size)
+                weight_viz.putdata(list_float2int(weight))
+                weight_viz.save("weight.png")
 
             with open(weightpath, "w") as w:
                 w.write(str(weight))
@@ -155,5 +158,7 @@ def train(
                     f"{correct_guesses/(1000)}; {i/(enouchs+1) * 100}% := {filename}\n"
                 )
                 correct_guesses = 0
-
-        print(i, correct_guesses, predict_shape, shape)
+        if verbose:
+            print(i, correct_guesses, predict_shape, shape, f"\n{correct_guesses/(1000)}; {i/(enouchs+1) * 100}% := {filename}\n")
+        else:
+            print(i, correct_guesses, predict_shape, shape)

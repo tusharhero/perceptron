@@ -16,13 +16,29 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-from PIL import Image as im
 import algorithm as algo
-import sys
+import argparse
 
-weightpath = sys.argv[1]
-weight = eval(algo.getfilecontent(weightpath))
+parser = argparse.ArgumentParser(
+                                 prog='perceptron-trainer',
+                                 description="""
+                                 This program will train perceptron and generate the weight file.
+                                 """
+)
 
-imagepath = sys.argv[2]
+parser.add_argument(
+                    'weightpath',
+                    help='filepath of weight',
+                    action='store'
+)
+parser.add_argument(
+                    'imgpath',
+                    help='filepath of image',
+                    action='store'
+)
 
-print(algo.guess(imagepath,weight,size=(100,100)))
+args = parser.parse_args()
+
+weight = eval(algo.getfilecontent(args.weightpath))
+
+print(algo.guess(args.imgtpath, weight, size=(100,100)))

@@ -123,7 +123,7 @@ def train(
         image = im.open(filename)
 
         if if_image_conversion:
-            image_conversion(image,size)
+            image = image_conversion(image,size)
         image_list = getimage_list(image)
 
         product = multiply(weight, image_list)
@@ -133,11 +133,11 @@ def train(
         if product + bias > 0:
             predict_shape = shapes[0]
             if shape != predict_shape:
-                weight = addition(weight, image_list, -1)
+                weight = addition(weight, image_list, +1)
         else:
             predict_shape = shapes[1]
             if shape != predict_shape:
-                weight = addition(weight, image_list, +1)
+                weight = addition(weight, image_list, -1)
 
         if shape == predict_shape:
             correct_guesses += 1

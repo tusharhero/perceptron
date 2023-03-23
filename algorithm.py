@@ -93,9 +93,9 @@ def guess(imagepath, weight, bias=100, shapes=("circle", "rectangle"),size=(100,
     product = multiply(weight, image_list)
 
     if product + bias > 0:
-        predict_shape = shapes[0]
-    else:
         predict_shape = shapes[1]
+    else:
+        predict_shape = shapes[0]
     return predict_shape 
 
 

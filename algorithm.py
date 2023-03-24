@@ -19,14 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from PIL import Image as im
 import random as ran
+import sys
 
 def image_conversion(image,size):
     image.convert("RGBA").convert("L")
     return image.resize(size)
 
-def getfilename(
-    shape, var=100, step=5
-):  # select random files from dataset. (This is possible because they follow a specific naming rule.)
+def getfilename(shape, var=100, step=5):  # select random files from dataset. (This is possible because they follow a specific naming rule.)
     filename = ""
     if shape == "circle":
         a = ran.randrange(0, var, step)
@@ -56,10 +55,36 @@ def genrandweight(size):  # randomly generate weight for first run
     return weight
 
 
-def getfilecontent(filepath):
-    with open(filepath, 'r') as fp:
-        text = fp.read()
-    return text
+def createfile(filepath, size):
+    with open(filepath, 'w') as fp:
+        fp.write(str(genrandweight(size)))
+
+
+def getfilecontent(filepath, size):
+    def readfile():
+        with open(filepath, 'r') as fp:
+            return fp.read()
+    try:
+        weights = eval(readfile())
+    except FileNotFoundError:
+        print(f'file "{filepath}" does not exists\ncreating "{filepath}"')
+        createfile(filepath, size)
+        print('done')
+        weights = eval(readfile())
+    except SyntaxError:
+        print('SyntaxError occured while parsing file')
+        choice = input('do you want to rewrite file by destorying its content? Y/n [Y]: ').lower()
+        while not choice in ('y', 'n', ''):
+            print(f'invalid input "{choice}"')
+            choice = input('do you want to rewrite file by destorying its content? Y/n [Y]: ').lower()
+        if choice in ('y', ''):
+            print(f'rewriting {filepath}')
+            createfile(filepath, size)
+            print('done')
+            weights = eval(readfile())
+        else:
+            sys.exit()
+    return weights
 
 
 def multiply(weight, image_list, size=(100, 100)):
@@ -114,7 +139,7 @@ def train(
         weight = genrandweight(size)
         weightpath = "weight"
     else:
-        weight = eval(getfilecontent(weightpath))
+        weight = getfilecontent(weightpath, size)
 
     correct_guesses = 0
 

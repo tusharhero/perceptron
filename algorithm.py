@@ -40,6 +40,36 @@ def getfilename(shape, var=100, step=5):  # select random files from dataset. (T
         filename = f"rectangles/({a},{b},{c},{d}).png"
     return filename
 
+def genrandomcircle(size):
+    image_list = []
+    radius = ran.randint(0,max(size))
+    center = (
+            ran.randint(0,size[0]),
+            ran.randint(0,size[1]),
+            )
+
+    for x in range(size[0]):
+        for y in range(size[1]):
+            if (x - center[0])**2 + (y - center[1])**2 <= radius**2:
+                image_list.append(1)
+            else:
+                image_list.append(0)
+    return image_list
+
+def genrandomrectangle(size):
+    image_list = []
+    a = ran.randint(0,max(size))
+    b = ran.randint(0,max(size))
+    p = ran.randint(0,max(size))
+    q = ran.randint(0,max(size))
+
+    for x in range(size[0]):
+        for y in range(size[1]):
+            if (abs(x - a) <= p) and (abs(y - b) <= q):
+                image_list.append(1)
+            else:
+                image_list.append(0)
+    return image_list
 
 def list_float2int(list):  # convert each elemenet of the list into an integer
     intlist = []
@@ -130,7 +160,6 @@ def train(
     weightpath="",
     size=(100, 100),
     shapes=("circle", "rectangle"),
-    if_image_conversion=True,
     no_visualize_weight=False,
     verbose=False
 ):
@@ -147,11 +176,10 @@ def train(
     for i in range(enouchs):
         shape = shapes[ran.randrange(2)]
         filename = getfilename(shape)
-        image = im.open(filename)
-
-        if if_image_conversion:
-            image = image_conversion(image,size)
-        image_list = getimage_list(image)
+        if shape == "circle":
+            image_list = genrandomcircle(size)
+        else:
+            image_list = genrandomrectangle(size)
 
         product = multiply(weight, image_list)
 

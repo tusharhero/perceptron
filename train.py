@@ -21,38 +21,37 @@ import algorithm as ag
 import argparse
 
 parser = argparse.ArgumentParser(
-                                 prog='perceptron-trainer',
-                                 description="""
-                                 This program will train perceptron and generate the weight file.
-                                 """
+    prog='perceptron-trainer',
+    description="""
+    This program will train perceptron and generate the weight file.
+    """
 )
 
 parser.add_argument(
-                    '--weight',
-                    '-w',
-                    default='weight',
-                    action='store',
-                    help="location of the weight file."
+    '--weight',
+    '-w',
+    default='weight',
+    action='store',
+    help="location of the weight file."
 )
 parser.add_argument(
-                    '--enouchs',
-                    '-e',
-                    default=10**7,
-                    action='store',
-                    help="Enouchs, the number of times it will train."
+    '--enouchs',
+    '-e',
+    default=10**7,
+    action='store',
+    help="Enouchs, the number of times it will train."
 )
 parser.add_argument(
-                    '--no-visualize-weight',
-                    action='store_true',
-                    help='prevent visualizing weight to "weight.png"'
+    '--no-visualize-weight',
+    action='store_true',
+    help='prevent visualizing weight to "weight.png"'
 )
 parser.add_argument(
-                    '--verbose',
-                    '-v',
-                    action='store_true',
-                    help='verbose output'
+    '--verbose',
+    '-v',
+    action='store_true',
+    help='verbose output'
 )
 
 args = parser.parse_args()
-print(args)
 ag.train(enouchs=int(args.enouchs), weightpath=args.weight, no_visualize_weight=args.no_visualize_weight, verbose=args.verbose)

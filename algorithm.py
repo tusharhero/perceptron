@@ -25,21 +25,6 @@ def image_conversion(image,size):
     image.convert("RGBA").convert("L")
     return image.resize(size)
 
-def getfilename(shape, var=100, step=5):  # select random files from dataset. (This is possible because they follow a specific naming rule.)
-    filename = ""
-    if shape == "circle":
-        a = ran.randrange(0, var, step)
-        b = ran.randrange(0, var, step)
-        r = ran.randrange(0, var, step)
-        filename = f"circles/({a},{b},{r}).png"
-    if shape == "rectangle":
-        a = ran.randrange(0, var, step)
-        b = ran.randrange(0, var, step)
-        c = ran.randrange(0, var, step)
-        d = ran.randrange(0, var, step)
-        filename = f"rectangles/({a},{b},{c},{d}).png"
-    return filename
-
 def genrandomcircle(size):
     image_list = []
     radius = ran.randint(0,max(size))
@@ -175,7 +160,6 @@ def train(
     # Read Wikipedia article linked in README.md
     for i in range(enouchs):
         shape = shapes[ran.randrange(2)]
-        filename = getfilename(shape)
         if shape == "circle":
             image_list = genrandomcircle(size)
         else:
@@ -208,10 +192,10 @@ def train(
 
             with open("log", "a") as log:
                 log.write(
-                    f"{correct_guesses/(1000)}; {i/(enouchs+1) * 100}% := {filename}\n"
+                    f"{correct_guesses/(1000)}; {i/(enouchs+1) * 100}% := {shape}\n"
                 )
                 correct_guesses = 0
         if verbose:
-            print(i, correct_guesses, predict_shape, shape, f"\n{correct_guesses/(1000)}; {i/(enouchs+1) * 100}% := {filename}\n")
+            print(i, correct_guesses, predict_shape, shape, f"\n{correct_guesses/(1000)}; {i/(enouchs+1) * 100}% := {shape}\n")
         else:
             print(i, correct_guesses, predict_shape, shape)

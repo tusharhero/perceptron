@@ -21,11 +21,15 @@ from PIL import Image as im
 import random as ran
 import sys
 
-def image_conversion(image,size):
+
+def image_conversion(image, size):
     image.convert("RGBA").convert("L")
     return image.resize(size)
 
-def getfilename(shape, var=100, step=5):  # select random files from dataset. (This is possible because they follow a specific naming rule.)
+
+def getfilename(
+    shape, var=100, step=5
+):  # select random files from dataset. (This is possible because they follow a specific naming rule.)
     filename = ""
     if shape == "circle":
         a = ran.randrange(0, var, step)
@@ -41,7 +45,7 @@ def getfilename(shape, var=100, step=5):  # select random files from dataset. (T
     return filename
 
 
-def list_float2int(list):  # convert each elemenet of the list into an integer
+def list_float2int(list):  # convert each element of the list into an integer
     intlist = []
     for i in list:
         intlist.append(int(i))
@@ -50,37 +54,42 @@ def list_float2int(list):  # convert each elemenet of the list into an integer
 
 def genrandweight(size):  # randomly generate weight for first run
     weight = []
-    for i in range(size[0] * size[1]):
+    for _ in range(size[0] * size[1]):
         weight.append(ran.randint(-1, 1))
     return weight
 
 
 def createfile(filepath, size):
-    with open(filepath, 'w') as fp:
+    with open(filepath, "w") as fp:
         fp.write(str(genrandweight(size)))
 
 
 def getfilecontent(filepath, size):
     def readfile():
-        with open(filepath, 'r') as fp:
+        with open(filepath, "r") as fp:
             return fp.read()
+
     try:
         weights = eval(readfile())
     except FileNotFoundError:
         print(f'file "{filepath}" does not exists\ncreating "{filepath}"')
         createfile(filepath, size)
-        print('done')
+        print("done")
         weights = eval(readfile())
     except SyntaxError:
-        print('SyntaxError occured while parsing file')
-        choice = input('do you want to rewrite file by destorying its content? Y/n [Y]: ').lower()
-        while not choice in ('y', 'n', ''):
+        print("SyntaxError occurred while parsing file")
+        choice = input(
+            "do you want to rewrite file by destroying its content? Y/n [Y]: "
+        ).lower()
+        while not choice in ("y", "n", ""):
             print(f'invalid input "{choice}"')
-            choice = input('do you want to rewrite file by destorying its content? Y/n [Y]: ').lower()
-        if choice in ('y', ''):
-            print(f'rewriting {filepath}')
+            choice = input(
+                "do you want to rewrite file by destroying its content? Y/n [Y]: "
+            ).lower()
+        if choice in ("y", ""):
+            print(f"rewriting {filepath}")
             createfile(filepath, size)
-            print('done')
+            print("done")
             weights = eval(readfile())
         else:
             sys.exit()
@@ -113,15 +122,15 @@ def getimage_list(image):
     return image_list
 
 
-def guess(imagepath, weight, bias=100, shapes=("circle", "rectangle"),size=(100,100)):
-    image_list = getimage_list(image_conversion(im.open(imagepath),size))
+def guess(imagepath, weight, bias=100, shapes=("circle", "rectangle"), size=(100, 100)):
+    image_list = getimage_list(image_conversion(im.open(imagepath), size))
     product = multiply(weight, image_list)
 
     if product + bias > 0:
         predict_shape = shapes[1]
     else:
         predict_shape = shapes[0]
-    return predict_shape 
+    return predict_shape
 
 
 def train(
@@ -132,7 +141,7 @@ def train(
     shapes=("circle", "rectangle"),
     if_image_conversion=True,
     no_visualize_weight=False,
-    verbose=False
+    verbose=False,
 ):
     # load weight from file or generate randomly
     if len(weightpath) == 0:
@@ -150,7 +159,7 @@ def train(
         image = im.open(filename)
 
         if if_image_conversion:
-            image = image_conversion(image,size)
+            image = image_conversion(image, size)
         image_list = getimage_list(image)
 
         product = multiply(weight, image_list)
@@ -184,6 +193,12 @@ def train(
                 )
                 correct_guesses = 0
         if verbose:
-            print(i, correct_guesses, predict_shape, shape, f"\n{correct_guesses/(1000)}; {i/(enouchs+1) * 100}% := {filename}\n")
+            print(
+                i,
+                correct_guesses,
+                predict_shape,
+                shape,
+                f"\n{correct_guesses/(1000)}; {i/(enouchs+1) * 100}% := {filename}\n",
+            )
         else:
             print(i, correct_guesses, predict_shape, shape)

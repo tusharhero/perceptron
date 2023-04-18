@@ -20,22 +20,14 @@ import algorithm as algo
 import argparse
 
 parser = argparse.ArgumentParser(
-    prog='perceptron-tester',
+    prog="perceptron-tester",
     description="""
     this program can be used to test if perceptron works.
-    """
+    """,
 )
 
-parser.add_argument(
-    'weightpath',
-    help='filepath of weight',
-    action='store'
-)
-parser.add_argument(
-    'imgpath',
-    help='filepath of image',
-    action='store'
-)
+parser.add_argument("weightpath", help="filepath of weight", action="store")
+parser.add_argument("imgpath", help="filepath of image", action="store")
 
 args = parser.parse_args()
 
